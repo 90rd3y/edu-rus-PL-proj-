@@ -1,0 +1,26 @@
+# --- Compiled Binaries ---
+*.out
+*.exe
+*.o
+*.obj
+*.so
+*.a
+
+# --- Project Specific Binaries ---
+# If your compiler produces a specific executable name, add it here:
+
+
+# --- Build Directories ---
+build/
+bin/
+obj/
+
+# --- IDE and Editor Folders ---
+.vscode/
+.idea/
+*.swp
+*~
+
+# --- System / OS Junk ---
+.DS_Store
+Thumbs.db
