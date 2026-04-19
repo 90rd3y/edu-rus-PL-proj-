@@ -5,8 +5,8 @@
 #include <cassert>
 #include <cmath>
 
-// Include the lexer implementation directly since Lexer is not exposed via a header.
-#include "../src/lexer.cpp" 
+// Include the lexer header
+#include "../inc/lexer.hpp"
 
 // --- Test Framework Helpers ---
 
@@ -103,8 +103,7 @@ bool is_eof(const Token& t) {
 
 // Tokenize helper expecting success
 std::vector<Token> lex_ok(std::string_view source) {
-    Lexer lexer(source, "test.ru");
-    auto res = lexer.tokenize();
+    auto res = Lexer::tokenize(source);
     if (!res.has_value()) {
         throw std::runtime_error(std::format("Lexing failed unexpectedly: {}", res.error().message));
     }
@@ -113,8 +112,7 @@ std::vector<Token> lex_ok(std::string_view source) {
 
 // Tokenize helper expecting error
 token::Error lex_err(std::string_view source) {
-    Lexer lexer(source, "test.ru");
-    auto res = lexer.tokenize();
+    auto res = Lexer::tokenize(source);
     if (res.has_value()) {
         throw std::runtime_error("Lexing succeeded but was expected to fail.");
     }
