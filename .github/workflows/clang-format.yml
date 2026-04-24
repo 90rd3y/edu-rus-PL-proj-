@@ -1,0 +1,27 @@
+name: Code Style Check
+
+# Trigger the action on every Pull Request to the main branch
+on:
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  format-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install clang-format
+        # Ensuring we have a recent version (Ubuntu-latest usually has v14 or v18)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-format
+
+      - name: Run clang-format check
+        # This looks for C++ files and runs the check
+        # --dry-run: Don't change files, just check
+        # --Werror: Fail the build if any formatting issues are found
+        run: |
+          find . -regex '.*\.\(cpp\|hpp\|h\|cc\|cxx\)' -exec clang-format --dry-run --Werror {} +
