@@ -1,0 +1,31 @@
+# Remove the '---' lines to fix the error
+BasedOnStyle: LLVM
+Language: Cpp
+
+# Line length constraint
+ColumnLimit: 80
+
+# Indentation and Spacing
+IndentWidth: 4
+UseTab: Never
+SpacesBeforeTrailingComments: 2
+
+# Readability: Line Breaks
+# This prevents long function calls from being cramped on one line
+BinPackArguments: false
+BinPackParameters: false
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: true
+AllowShortBlocksOnASingleLine: Empty
+
+# Readability: Alignment
+# Aligns parameters under the opening bracket of a function call
+AlignAfterOpenBracket: Align
+PointerAlignment: Left
+
+# Braces Style
+# 'Attach' keeps braces on the same line as the statement (standard for C++)
+BreakBeforeBraces: Attach
+
+# Clean up Include headers automatically
+SortIncludes: true
