@@ -1,8 +1,6 @@
 #include "../inc/lexer.hpp"
 #include "../inc/token.hpp"
 
-// Note: ensurelexer handling wrong fp notations.
-
 #include <cctype>
 #include <cmath>
 #include <expected>
@@ -20,6 +18,7 @@ static const std::unordered_map<std::string_view, Token::ValueVariant>
         {"стат_структ", token::Keyword::StatStruct},
         {"область", token::Keyword::Namespace},
         {"если", token::Keyword::If},
+        {"тогда", token::Keyword::Then},
         {"иначе", token::Keyword::Else},
         {"пока", token::Keyword::While},
         {"вернуть", token::Keyword::Return},
@@ -29,18 +28,23 @@ static const std::unordered_map<std::string_view, Token::ValueVariant>
         {"включить", token::Keyword::Include},
         {"из", token::Keyword::From},
         {"употреб", token::Keyword::Using},
-        {"размер", token::Keyword::SizeOf},
-        {"ст_ряд_длина", token::Keyword::StringLen},
         {"как", token::Keyword::As},
 
         // Types
         {"ц8", token::TypeTok::I8},
         {"ц8б", token::TypeTok::U8},
-        // ... mapped rest of numeric types ...
+        {"ц16", token::TypeTok::I16},
+        {"ц32", token::TypeTok::I32},
+        {"ц64", token::TypeTok::I64},
+        {"ц16б", token::TypeTok::U16},
+        {"ц32б", token::TypeTok::U32},
+        {"ц64б", token::TypeTok::U64},
+        {"пт32", token::TypeTok::F32},
+        {"пт64", token::TypeTok::F64},
         {"лог", token::TypeTok::Bool},
         {"стр", token::TypeTok::Str},
-        {"ряд", token::TypeTok::DynArray},
-        {"стат_ряд", token::TypeTok::StatArray},
+        {"ряд", token::Keyword::DynArray},
+        {"стат_ряд", token::Keyword::StatArray},
 
         // Literals (Converted to Literal variant immediately)
         {"истина", token::Literal{token::BoolLiteral{true}}},
@@ -179,7 +183,7 @@ Token Lexer::extract_string(uint32_t start_pos) noexcept {
         }
         if (c == '\n') {
             return error_token(
-                "Перенос строки внутри строкового литерала недопустим.\n",
+                "Перенос строки внутри строкового литерала недопустим",
                 start_pos);
         }
         if (c == '\\') {

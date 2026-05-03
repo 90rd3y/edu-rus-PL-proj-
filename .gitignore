@@ -21,6 +21,10 @@ obj/
 *.swp
 *~
 
+# --- Formatter's ---
+.clang-format.bak
+.cache
+
 # --- System / OS Junk ---
 .DS_Store
 Thumbs.db
