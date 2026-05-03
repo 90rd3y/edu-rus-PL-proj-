@@ -17,7 +17,6 @@ enum class Keyword {
     StatStruct,
     Namespace,
     If,
-    Then,
     Else,
     While,
     Return,

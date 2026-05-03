@@ -89,8 +89,9 @@ ParseResult<std::unique_ptr<ast::IfStmt>> parse_if(ParseState& state) {
     auto if_stmt = std::make_unique<ast::IfStmt>();
     PARSE_TRY(cond, parse_expression(state, Precedence::None));
     if_stmt->condition = std::move(cond);
-    PARSE_TRY_VOID(consume_keyword(
-        state, token::Keyword::Then, "Ожидалось 'тогда' после условия 'если'"));
+    PARSE_TRY_VOID(consume_punct(state,
+                                 token::Punctuator::Arrow,
+                                 "Ожидалось '->' после условия 'если'"));
     PARSE_TRY(then_block, parse_block(state));
     if_stmt->then_block = std::move(then_block);
 
@@ -113,6 +114,9 @@ ParseResult<std::unique_ptr<ast::WhileStmt>> parse_while(ParseState& state) {
     auto w_stmt = std::make_unique<ast::WhileStmt>();
     PARSE_TRY(cond, parse_expression(state, Precedence::None));
     w_stmt->condition = std::move(cond);
+    PARSE_TRY_VOID(consume_punct(state,
+                                 token::Punctuator::Arrow,
+                                 "Ожидалось '->' после условия 'пока'"));
     PARSE_TRY(body, parse_block(state));
     w_stmt->body = std::move(body);
     return w_stmt;

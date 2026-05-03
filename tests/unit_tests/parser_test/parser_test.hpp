@@ -200,19 +200,19 @@ inline void test_func_body_var_decls() {
 inline void test_func_body_control_flow() {
     std::string_view source = R"(
 функ начало: -> ц32 {
-    если юзер != ничто тогда {
+    если юзер != ничто -> {
         пер усп: лог = обновить_статус(изм юзер, истина);
-        если не усп тогда {
+        если не усп -> {
             вернуть 1;
         }
     } иначе {
         пер счетчик: ц32 = 0;
-        пока счетчик < 10 {
+        пока счетчик < 10 -> {
             счетчик += 1;
-            если счетчик == 5 тогда {
+            если счетчик == 5 -> {
                 продолжить;
             }
-            если счетчик == 9 тогда {
+            если счетчик == 9 -> {
                 прекратить;
             }
         }
@@ -573,7 +573,7 @@ inline void test_namespace_in_local_scope() {
 
 inline void test_assignment_where_expr_expected() {
     auto res =
-        parse_source("функ тест: -> ничто {\n    если (а = 5) тогда {\n       "
+        parse_source("функ тест: -> ничто {\n    если (а = 5) -> {\n       "
                      " вернуть;\n    }\n}");
     ASSERT(!res.has_value(),
            "Parser should catch assignment in expression place");

@@ -18,7 +18,6 @@ static const std::unordered_map<std::string_view, Token::ValueVariant>
         {"стат_структ", token::Keyword::StatStruct},
         {"область", token::Keyword::Namespace},
         {"если", token::Keyword::If},
-        {"тогда", token::Keyword::Then},
         {"иначе", token::Keyword::Else},
         {"пока", token::Keyword::While},
         {"вернуть", token::Keyword::Return},
