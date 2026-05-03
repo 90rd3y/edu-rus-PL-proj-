@@ -26,9 +26,9 @@ enum class Keyword {
     Include,
     From,
     Using,
-    SizeOf,
-    StringLen,
-    As
+    As,
+    DynArray,
+    StatArray
 };
 
 // Built-in Primitive Types
@@ -44,9 +44,7 @@ enum class TypeTok {
     F32,
     F64,
     Bool,
-    Str,
-    DynArray,
-    StatArray
+    Str
 };
 
 enum class TypeMorpheme {

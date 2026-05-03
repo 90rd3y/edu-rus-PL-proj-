@@ -31,8 +31,7 @@
               "ц8" | "ц16" | "ц32" | "ц64" |
               "ц8б" | "ц16б" | "ц32б" | "ц64б" |
               "пт32" | "пт64" | "лог" | "стр" |
-              "ряд" | "стат_ряд" |
-              "размер" | "ст_ряд_длина" | "как"
+              "ряд" | "стат_ряд" | "как"
 
 <comment> ::= "@" { <any_char_except_newline> }
 
@@ -82,8 +81,8 @@
 ```
 <program> ::= { <top_level_stmt> }
 <top_level_stmt> ::= <declaration> | <module_stmt> | ";"
-<statement> ::= <declaration> | <assignment_stmt> | <control_flow> |
-<call_stmt> | <block_stmt> | ";"
+<statement> ::= <declaration> | <using_stmt> | <assignment_stmt> |
+<control_flow> | <call_stmt> | <block_stmt> | ";"
 
 <block_stmt> ::= "{" { <statement> } "}"
 ```
@@ -142,13 +141,15 @@
 <var_decl> ::= ("пер" | "пост") <id> ":" <type> "="
 ("ничто" | <spread_init> | <expr>) ";"
 
-<struct_decl> ::= ("структ" | "стат_структ") <id>
-( "{" <struct_field> { <struct_field> } "}" | ";" )
+<struct_decl> ::= ("структ" | "стат_структ")
+(<id> "{" <struct_field> { <struct_field> } "}" | <qualified_id> ";")
 <struct_field> ::= <id> ":" <type> ";"
 
-<func_decl> ::= "функ" <id> ":" [ <param_list> ] "->" <ret_type>
-(<block_stmt> | ";")
+<func_decl> ::= "функ" (<id> ":" [ <param_list> ] "->" <ret_type> <block_stmt> |
+<qualified_id> ":" [ <param_proto_list> ] "->" <ret_type> ";")
 <ret_type> ::= [ "!" ] <type> | "ничто"
+<param_proto_list> ::= <param_proto> {"," <param_proto>}
+<param_proto> ::= [ "изм" ] <param_type> [ <id> ]
 <param_list> ::= <param> { "," <param> }
 <param> ::= [ "изм" ] <param_type> <id>
 ```
@@ -160,9 +161,9 @@
 
 <loop_control> ::= ("прекратить" | "продолжить") ";"
 
-<if_stmt> ::= "если" <expr> <block_stmt>
+<if_stmt> ::= "если" <expr> "->" <block_stmt>
 [ "иначе" ( <block_stmt> | <if_stmt> ) ]
-<while_stmt> ::= "пока" <expr> <block_stmt>
+<while_stmt> ::= "пока" <expr> "->" <block_stmt>
 
 <return_stmt> ::= "вернуть" [ "ничто" | <expr> ] ";"
 
@@ -201,20 +202,20 @@
 <term> ::= <factor> { ("+" | "-") <factor> }
 <factor> ::= <unary> { ("*" | "/" | "%") <unary> }
 
-<unary> ::= ("-" | "~" | "не") <unary> | "как" "<" <type> ">" "(" <expr> ")" |
-"размер" "(" <type> ")" | "ст_ряд_длина" "(" <expr> ")" | <primary>
+<unary> ::= ("-" | "~" | "не") <unary> | <primary>
 
-<primary> ::= ( <literal> | <struct_init> | <array_init> | "(" <expr> ")" |
-<qualified_id> ) { <postfix> }
+<primary> ::= <literal> | <struct_init> | <array_init> |
+(["как" "<" <type> ">"] "(" <expr> ")" | <qualified_id>) { <postfix> }
 
 <postfix> ::= "(" [ <arg_list> ] ")" | "." <id> | "[" <expr> [ ":" <expr> ] "]"
 <arg_list> ::= <arg> { "," <arg> }
 <arg> ::= "ничто" | [ "изм" ] <expr>
 
 <qualified_id> ::= <id> { "\\" <id> }
-<struct_init> ::= <qualified_id> "{" [ ("ничто" | <expr> | <spread_init>)
-{ "," ("ничто" | <expr> | <spread_init>) } ] "}"
-<array_init> ::= "[" ("ничто" | <expr>) { "," ("ничто" | <expr>) } "]"
+<struct_init> ::= <qualified_id> "{" ("ничто" | <expr> | <spread_init>)
+{ "," ("ничто" | <expr> | <spread_init>) } "}"
+<array_init> ::= "[" ("ничто" | <expr> | <spread_init>)
+{ "," ("ничто" | <expr> | <spread_init>) } "]"
 <spread_init> ::= <expr> <spread_token>
 ```
 

@@ -6,39 +6,8 @@
 #include <vector>
 
 // Include the lexer header
-#include "../inc/lexer.hpp"
-
-// --- Test Framework Helpers ---
-
-struct TestRunner {
-    size_t passed = 0;
-    size_t failed = 0;
-
-    void run(std::string_view name, void (*test_func)()) {
-        try {
-            test_func();
-            std::cout << std::format("[PASS] {}\n", name);
-            passed++;
-        } catch (const std::exception& e) {
-            std::cout << std::format("[FAIL] {}: {}\n", name, e.what());
-            failed++;
-        }
-    }
-
-    void summary() const {
-        std::cout << std::format(
-            "\n[SUMMARY] {}/{} tests passed.\n", passed, passed + failed);
-        if (failed > 0) std::exit(1);
-    }
-};
-
-// Exception-based assertion for the test runner
-#define ASSERT(cond, msg)                                                      \
-    do {                                                                       \
-        if (!(cond))                                                           \
-            throw std::runtime_error(std::format(                              \
-                "Assertion failed: {}:{} - {}", __FILE__, __LINE__, msg));     \
-    } while (false)
+#include "../../inc/lexer.hpp"
+#include "../test_runner.hpp"
 
 // --- Token Matching Helpers ---
 

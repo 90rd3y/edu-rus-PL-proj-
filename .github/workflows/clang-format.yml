@@ -13,15 +13,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install clang-format
-        # Ensuring we have a recent version (Ubuntu-latest usually has v14 or v18)
+      - name: Install clang-format 14
         run: |
           sudo apt-get update
-          sudo apt-get install -y clang-format
+          # Install version 14 specifically
+          sudo apt-get install -y clang-format-14
+          # Create a symbolic link so the 'clang-format' command points to version 14
+          sudo ln -sf /usr/bin/clang-format-14 /usr/bin/clang-format
 
       - name: Run clang-format check
-        # This looks for C++ files and runs the check
-        # --dry-run: Don't change files, just check
-        # --Werror: Fail the build if any formatting issues are found
         run: |
+          # This will print the version in the logs to confirm it matches 14.0.0
+          clang-format --version
+          
+          # Check command
           find . -regex '.*\.\(cpp\|hpp\|h\|cc\|cxx\)' -exec clang-format --dry-run --Werror {} +
