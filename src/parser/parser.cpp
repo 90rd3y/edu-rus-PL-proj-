@@ -7,19 +7,19 @@ namespace parser {
 //           RECURSIVE DESCENT (TOP LEVEL)
 // ==========================================
 
-[[nodiscard]] ParseResult<ast::Program> Parser::parse() {
-    ast::Program program;
+[[nodiscard]] ParseResult<ast::Source> Parser::parse() {
+    ast::Source source;
     if (!is_at_end(state)) {
-        program.loc = peek(state).m_loc;
+        source.loc = peek(state).m_loc;
     }
 
     while (!is_at_end(state)) {
         PARSE_TRY(stmt, parse_top_level_stmt(state));
         if (stmt) {  // Ignore nullptr (empty statements)
-            program.top_level_stmts.push_back(std::move(stmt));
+            source.top_level_stmts.push_back(std::move(stmt));
         }
     }
-    return program;
+    return source;
 }
 
 // ==========================================

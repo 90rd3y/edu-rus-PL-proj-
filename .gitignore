@@ -28,3 +28,7 @@ obj/
 # --- System / OS Junk ---
 .DS_Store
 Thumbs.db
+
+# --- Other (User's) ---
+NOTES.md
+sem_distr.md

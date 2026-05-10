@@ -81,7 +81,7 @@
 ```
 <program> ::= { <top_level_stmt> }
 <top_level_stmt> ::= <declaration> | <module_stmt> | ";"
-<statement> ::= <declaration> | <using_stmt> | <assignment_stmt> |
+<statement> ::= <var_decl> | <using_stmt> | <assignment_stmt> |
 <control_flow> | <call_stmt> | <block_stmt> | ";"
 
 <block_stmt> ::= "{" { <statement> } "}"
@@ -133,7 +133,7 @@
 @ 1 "Модель исполнения" пункт
 @ "Обязательные к проверке значения (Модификатор `!`)",
 @ 2 "Память и присваивание"
-@ пункт "Гарантия инициализации переменной")
+@ пункт "Правила инициализации переменной" подпункт "Гарантия инициализации")
 
 ```
 <declaration> ::= <var_decl> | <func_decl> | <struct_decl>
