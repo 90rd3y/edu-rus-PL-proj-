@@ -53,13 +53,6 @@ ParseResult<ast::ExprPtr> parse_infix(ParseState& state, ast::ExprPtr left);
                check_keyword(state, token::Keyword::Const)) {
         PARSE_TRY(var_decl, parse_var_decl(state));
         stmt->variant = std::move(var_decl);
-    } else if (check_keyword(state, token::Keyword::Func)) {
-        PARSE_TRY(func_decl, parse_func_decl(state));
-        stmt->variant = std::move(func_decl);
-    } else if (check_keyword(state, token::Keyword::Struct) ||
-               check_keyword(state, token::Keyword::StatStruct)) {
-        PARSE_TRY(struct_decl, parse_struct_decl(state));
-        stmt->variant = std::move(struct_decl);
     } else {
         PARSE_TRY(assign_or_call, parse_assignment_or_call(state));
         return assign_or_call;

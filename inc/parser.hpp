@@ -20,7 +20,7 @@ class Parser {
   public:
     explicit Parser(const std::vector<Token>& tokens) : state{tokens, 0} {}
 
-    [[nodiscard]] ParseResult<ast::Program> parse();
+    [[nodiscard]] ParseResult<ast::Source> parse();
 };
 
 }  // namespace parser

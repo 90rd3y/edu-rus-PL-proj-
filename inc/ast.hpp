@@ -293,7 +293,7 @@ struct TopLevelStmt {
 //                ROOT NODE
 // ==========================================
 
-struct Program {
+struct Source {
     std::vector<TopLevelStmtPtr> top_level_stmts;
     SourceLocation loc;
 };

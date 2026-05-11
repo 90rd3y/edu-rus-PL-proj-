@@ -14,8 +14,8 @@
 //                               UTILITIES
 // ============================================================================
 
-// Helper to bridge Lexer and Parser, extracting the root AST Program.
-inline std::expected<ast::Program, parser::ParseError>
+// Helper to bridge Lexer and Parser, extracting the root AST Source.
+inline std::expected<ast::Source, parser::ParseError>
 parse_source(std::string_view source) {
     auto tokens_res = Lexer::tokenize(source);
     if (!tokens_res) {
